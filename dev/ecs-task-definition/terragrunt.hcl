@@ -11,7 +11,7 @@ dependency "task_role" {
 }
 
 inputs = {
-  name = "ecs-demo-task-definition"
+  family = "ecs-demo-task-definition"
   container_definitions_path = "./container-definitions.json"
   network_mode = "awsvpc"
   compatibilities = ["FARGATE"]
