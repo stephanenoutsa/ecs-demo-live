@@ -1,0 +1,80 @@
+name: Configure
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      destroy:
+        description: 'Run Terragrunt destroy command'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - true
+          - false
+
+jobs:
+  apply:
+    if: ${{ !inputs.destroy || inputs.destroy == 'false' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.5
+          terraform_wrapper: false
+
+      - name: Setup Terragrunt
+        run: |
+          curl -LO "https://github.com/gruntwork-io/terragrunt/releases/download/v0.48.1/terragrunt_linux_amd64"
+          chmod +x terragrunt_linux_amd64
+          sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+          terragrunt -v
+
+      - name: Apply Terraform changes
+        run: |
+          cd dev
+          terragrunt run-all apply -auto-approve --terragrunt-non-interactive -var AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -var AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -var AWS_REGION=$AWS_DEFAULT_REGION
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+
+  destroy:
+    if: ${{ inputs.destroy == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.5
+          terraform_wrapper: false
+
+      - name: Setup Terragrunt
+        run: |
+          curl -LO "https://github.com/gruntwork-io/terragrunt/releases/download/v0.48.1/terragrunt_linux_amd64"
+          chmod +x terragrunt_linux_amd64
+          sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+          terragrunt -v
+
+      - name: Destroy Terraform changes
+        run: |
+          cd dev
+          terragrunt run-all destroy -auto-approve --terragrunt-non-interactive -var AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -var AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -var AWS_REGION=$AWS_DEFAULT_REGION
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}

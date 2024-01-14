@@ -1,0 +1,15 @@
+[
+  {
+    "name": "ecs-demo",
+    "image": "534876755051.dkr.ecr.us-east-1.amazonaws.com/ecs-demo:latest",
+    "cpu": 512,
+    "memory": 2048,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 80
+      }
+    ]
+  }
+]
