@@ -18,4 +18,5 @@ inputs = {
   cpu = 512
   memory = 2048
   task_role_arn = dependency.task_role.outputs.role_arn
+  execution_role_arn = dependency.task_role.outputs.role_arn
 }
