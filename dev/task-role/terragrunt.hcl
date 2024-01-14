@@ -10,10 +10,10 @@ inputs = {
   principals = [
     {
       type = "Service"
-      identifiers = ["ecs.amazonaws.com"]
+      identifiers = ["ecs-tasks.amazonaws.com"]
     }
   ]
-  role_name = "ECSTaskTaskRole"
+  role_name = "ECSTaskExecutionRole"
   policy_name = "ECRPermissionsPolicy"
   policy_statements = [
     {
