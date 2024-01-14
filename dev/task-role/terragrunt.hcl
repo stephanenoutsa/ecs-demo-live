@@ -14,7 +14,7 @@ inputs = {
     }
   ]
   role_name = "ECSTaskExecutionRole"
-  policy_name = "ECRPermissionsPolicy"
+  policy_name = "ECRTaskExecutionPolicy"
   policy_statements = [
     {
       sid = "ECRPermissions"
@@ -32,6 +32,19 @@ inputs = {
         "ecr:ListImages",
         "ecr:ListTagsForResource"
       ]
+      resources = ["*"]
+    },
+    {
+      sid = "CloudWatchLogsPermissions"
+      actions = [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "logs:PutLogEvents",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents",
+      ],
       resources = ["*"]
     }
   ]
