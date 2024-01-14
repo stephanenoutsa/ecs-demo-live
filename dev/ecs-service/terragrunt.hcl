@@ -30,7 +30,7 @@ inputs = {
   launch_type = "FARGATE"
   force_new_deployment = true
   network_configuration = {
-    subnets = dependency.public_subnets.outputs.public_subnets[0]
+    subnets = [dependency.public_subnets.outputs.public_subnets[0]]
     security_groups = [dependency.security_group.outputs.security_group_id]
     assign_public_ip = true
   }
