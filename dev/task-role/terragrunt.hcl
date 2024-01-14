@@ -22,7 +22,7 @@ inputs = {
         "ecr:BatchCheckLayerAvailability",
         "ecr:BatchGetImage",
         "ecr:DescribeImages",
-        "ecr:DescribeImageScanFindings"
+        "ecr:DescribeImageScanFindings",
         "ecr:DescribeRepositories",
         "ecr:GetAuthorizationToken",
         "ecr:GetDownloadUrlForLayer",
@@ -30,7 +30,7 @@ inputs = {
         "ecr:GetLifecyclePolicyPreview",
         "ecr:GetRepositoryPolicy",
         "ecr:ListImages",
-        "ecr:ListTagsForResource",
+        "ecr:ListTagsForResource"
       ]
       resources = ["*"]
     }
