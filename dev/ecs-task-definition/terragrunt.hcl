@@ -17,5 +17,5 @@ inputs = {
   compatibilities = ["FARGATE"]
   cpu = 512
   memory = 2048
-  task_role_arn = dependency.task_role.outputs.arn
+  task_role_arn = dependency.task_role.outputs.role_arn
 }
